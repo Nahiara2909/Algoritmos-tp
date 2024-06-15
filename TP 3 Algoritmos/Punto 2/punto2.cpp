@@ -1,13 +1,14 @@
 #include <iostream>
 #include <cstring>
+#define tope 21
 
 using namespace std;
 
 struct empleado{
-    unsigned short int legajo;
+    //unsigned short int legajo;
     char dni[9];
-    char apellido[20];
-    char nombre[20];
+    char apellido[tope];
+    char nombre[tope];
 };
 
 void ingresarEmpleados(empleado arreglo[], int n);
@@ -19,23 +20,24 @@ int seleccionarOpcion();
 
 int main(){
 
-    int cant_emp = 20;
+    const int cant_emp = 20;
     empleado arreglo[cant_emp];
     int opcion;
 	opcion=seleccionarOpcion();
-
+    int contador = 0;
 
     while(opcion >= 1 && opcion <= 3){
 		switch(opcion)
 		{
-		case 1:	cout<<"INGRESAR EMPLEADO/A"<<endl;
-				ingresarEmpleados(arreglo, cant_emp);
+		case 1:	cout<<"INGRESAR EMPLEADO/AS"<<endl;
+				ingresarEmpleados(arreglo, contador);
+				contador++;
 				break;
 		case 2: cout<<"MODIFICAR UN EMPLEADO/A"<<endl;
-				modificarEmpleado(arreglo, cant_emp);
+				modificarEmpleado(arreglo, contador);
 				break;
-		case 3:	cout<<"MOSTRAR EMPLEADO"<<endl;
-				mostrarEmpleados(arreglo, cant_emp);
+		case 3:	cout<<"MOSTRAR EMPLEADOS"<<endl;
+				mostrarEmpleados(arreglo, contador);
 				break;
 		default: cout<<"SALIENDO.";
 		}
@@ -65,13 +67,8 @@ return opcion;
 
 void ingresarEmpleados(empleado arreglo[], int n)
 {
+    arreglo[n]=ingresarEmpleado();
 
-	for(int i=0; i<n ; i++)
-	{
-	  arreglo[i]=ingresarEmpleado();
-	  arreglo[i].legajo = i+1;
-	  cout<<"\n";
-	}
 }
 
 empleado ingresarEmpleado()
@@ -111,13 +108,14 @@ void mostrarEmpleados(empleado arreglo[], int n)
 {
 	for(int i=0; i<n; i++)
 	{
+	    cout<<endl<<"Legajo: "<< i+1<<endl;
 		mostrarEmpleado(arreglo[i]);
 	}
 }
 
 void mostrarEmpleado(empleado laburante)
 {
-	cout<<"Legajo: "<<laburante.legajo<<"\n";
+	//cout<<"Legajo: "<<laburante.legajo<<"\n";
 	cout<<"DNI: "<<laburante.dni<<"\n";
 	cout<<"Apellido: "<<laburante.apellido<<"\n";
 	cout<<"Nombre: "<<laburante.nombre<<"\n";
@@ -128,13 +126,12 @@ void modificarEmpleado(empleado arreglo[], int n){
     cout<<"Ingrese legajo del empleado/a: "<<endl;
     cin>>legajo_buscado;
 
-    for(int i=0; i<n; i++){
-        if(arreglo[i].legajo == legajo_buscado){
-            mostrarEmpleado(arreglo[i]);
+
+    mostrarEmpleado(arreglo[legajo_buscado - 1]);
+
             cout<<"Modificar Apellido: "<<endl;
-            cin>>arreglo[i].apellido;
+            cin>>arreglo[legajo_buscado - 1].apellido;
             cout<<"Modificar Nombre: "<<endl;
-            cin>>arreglo[i].nombre;
-        }
-    }
+            cin>>arreglo[legajo_buscado - 1].nombre;
+
 }
